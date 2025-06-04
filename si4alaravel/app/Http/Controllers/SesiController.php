@@ -20,6 +20,9 @@ class SesiController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->user()->cannot('create', Sesi::class)) {
+            abort(403,'Lu bukan edmin kids');
+        }
         $input = $request->validate([
             'nama' => 'required'
         ]);

@@ -33,6 +33,9 @@ class ProdiController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->user()->cannot('create', Prodi::class)) {
+            abort(403,'Lu bukan edmin kids');
+        }
         //validasi input
         $input = $request->validate(
             [

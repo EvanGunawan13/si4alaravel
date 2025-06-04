@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
             Schema::create('jadwal', function (Blueprint $table) { 
+            $table->id();
             $table->string('tahun_akademik', 10);
             $table->enum('kode_smt', allowed: ['Gasal', 'Genap']);
             $table->string('kelas', 10);

@@ -35,6 +35,9 @@ class MataKuliahController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->user()->cannot('create', MataKuliah::class)) {
+            abort(403,'Lu bukan edmin kids');
+        }
         // Validasi input
         $input = $request->validate([
             'nama' => 'required|unique:matakuliah',

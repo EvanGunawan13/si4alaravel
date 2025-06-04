@@ -33,7 +33,13 @@ class FakultasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //cek apakah user yang login memiliki hak akses untuk membuat data fakultas
+        if ($request->user()->cannot('create', Fakultas::class)) {
+            abort(403,'Lu bukan edmin kids');
+        }
+
+
+
         //validasi input
         $input = $request->validate(
             [
@@ -75,8 +81,14 @@ class FakultasController extends Controller
      */
     public function update(Request $request, $fakultas)
     {
-        
+
         $fakultas = Fakultas::findorfail($fakultas);
+
+        if ($request->user()->cannot('update', $fakultas)) {
+            abort(403,'Lu bukan edmin kids');
+        }
+
+        
         //validasi input
         $input = $request->validate(
             [
@@ -97,10 +109,13 @@ class FakultasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($fakultas)
+    public function destroy(Request $request, $fakultas)
     {
         //
         $fakultas=Fakultas::findOrFail($fakultas);
+        if ($request->user()->cannot('delete', $fakultas)) {
+            abort(403,'Lu bukan edmin kids');
+        }
 
         $fakultas->delete();
 

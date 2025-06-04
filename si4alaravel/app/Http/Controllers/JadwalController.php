@@ -35,6 +35,10 @@ class JadwalController extends Controller
      */
     public function store(Request $request)
     {
+
+        if ($request->user()->cannot('create', Jadwal::class)) {
+            abort(403,'Lu bukan edmin kids');
+        }
          $input = $request->validate(
             [
                 'tahun_akademik' => 'required',
